@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import ca.mcgill.ecse321.eventregistration.model.Event;
-import ca.mcgill.ecse321.eventregistration.model.Person;
+import ca.mcgill.ecse321.eventregistration.model.User;
 import ca.mcgill.ecse321.eventregistration.model.Registration;
 import ca.mcgill.ecse321.eventregistration.model.Registration.RegistrationId;
 
@@ -19,7 +19,7 @@ import ca.mcgill.ecse321.eventregistration.model.Registration.RegistrationId;
 public class TestRegistrationRepository {
 
 	@Autowired
-	PersonRepository personRepo;
+	UserRepository userRepo;
 	@Autowired
 	EventRepository eventRepo;
 	@Autowired
@@ -28,17 +28,17 @@ public class TestRegistrationRepository {
 	@AfterEach
 	public void clearDatabase() {
 		registrationRepo.deleteAll();
-		personRepo.deleteAll();
+		userRepo.deleteAll();
 		eventRepo.deleteAll();
 	}
 	
 	@Test
 	public void testPersistAndLoadRegistration() {
 		// Create and save "parent" entities
-		String personName = "Alice";
-		Person alice = new Person();
-		alice.setName(personName);
-		alice = personRepo.save(alice);
+		String aliceName = "Alice";
+		User alice = new User();
+		alice.setName(aliceName);
+		alice = userRepo.save(alice);
 		
 		String eventName = "TechFair";
 		Date eventDate = Date.valueOf("2023-02-10");
@@ -54,7 +54,7 @@ public class TestRegistrationRepository {
 		// Create registration
 		RegistrationId registrationId = new RegistrationId();
 		registrationId.setEvent(techFair);
-		registrationId.setPerson(alice);
+		registrationId.setParticipant(alice);
 		Registration registration = new Registration();
 		registration.setId(registrationId);
 		

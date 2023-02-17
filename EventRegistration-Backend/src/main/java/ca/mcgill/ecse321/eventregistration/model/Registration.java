@@ -29,22 +29,22 @@ public class Registration {
 		private Event event;
 
 		@ManyToOne
-		private Person person;
+		private User participant;
 
 		public Event getEvent() {
 			return event;
 		}
 
-		public Person getPerson() {
-			return person;
+		public User getParticipant() {
+			return participant;
 		}
 
 		public void setEvent(Event event) {
 			this.event = event;
 		}
 
-		public void setPerson(Person person) {
-			this.person = person;
+		public void setParticipant(User participant) {
+			this.participant = participant;
 		}
 
 		@Override
@@ -54,12 +54,12 @@ public class Registration {
 			}
 
 			RegistrationId r = (RegistrationId) o;
-			return this.event.getId() == r.event.getId() && this.person.getId() == r.person.getId();
+			return this.event.getId() == r.event.getId() && this.participant.getId() == r.participant.getId();
 		}
 		
 		@Override
 		public int hashCode() {
-			return Objects.hash(this.event, this.person);
+			return Objects.hash(this.event, this.participant);
 		}
 
 	}

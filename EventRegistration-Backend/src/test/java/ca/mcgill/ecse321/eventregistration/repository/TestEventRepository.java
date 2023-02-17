@@ -41,7 +41,7 @@ public class TestEventRepository {
 		techFair = repo.save(techFair);
 
 		// Read from DB
-		Event techFairFromDb = repo.findEventById(techFair.getId());
+		Event techFairFromDb = repo.findEventByEventId(techFair.getId());
 
 		// Check attributes
 		assertNotNull(techFairFromDb);

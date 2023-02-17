@@ -8,35 +8,35 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ca.mcgill.ecse321.eventregistration.model.Person;
+import ca.mcgill.ecse321.eventregistration.model.User;
 
 @SpringBootTest
-public class TestPersonRepository {
+public class TestUserRepository {
 
 	@Autowired
-	private PersonRepository repo;
-	
+	private UserRepository repo;
+
 	@AfterEach
 	public void clearDatabase() {
 		repo.deleteAll();
 	}
-	
+
 	@Test
-	public void testPersistAndLoadPerson() {
+	public void testPersistAndLoadUser() {
 		// Create object
 		String name = "Alice";
-		Person alice = new Person();
+		User alice = new User();
 		alice.setName(name);
-		
+
 		// Save to DB
 		alice = repo.save(alice);
-		
+
 		// Read from DB
-		Person aliceFromDb = repo.findPersonById(alice.getId());
-		
+		User aliceFromDb = repo.findUserById(alice.getId());
+
 		// Check attributes
 		assertNotNull(aliceFromDb);
 		assertEquals(name, aliceFromDb.getName());
 	}
-	
+
 }
