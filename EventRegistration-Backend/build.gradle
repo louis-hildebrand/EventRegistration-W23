@@ -24,5 +24,6 @@ tasks.named('test') {
 	
 	testLogging {
 		exceptionFormat "full"
+		events "failed", "skipped", "passed"
 	}
 }
