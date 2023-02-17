@@ -12,6 +12,14 @@ public class Registration {
 
 	@EmbeddedId
 	private RegistrationId id;
+	
+	public RegistrationId getId() {
+		return id;
+	}
+	
+	public void setId(RegistrationId id) {
+		this.id = id;
+	}
 
 	public static class RegistrationId implements Serializable {
 
