@@ -24,6 +24,11 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 	
+	/**
+	 * Gets all people.
+	 *
+	 * @return All people.
+	 */
 	@GetMapping("/person")
 	public Iterable<PersonResponseDto> getAllPeople() {
 		return StreamSupport.stream(personService.getAllPeople().spliterator(), false)
@@ -31,6 +36,12 @@ public class PersonController {
 				.collect(Collectors.toList());
 	}
 	
+	/**
+	 * Gets a specific person.
+	 *
+	 * @param id The primary key of the person to look up.
+	 * @return The person with the given ID.
+	 */
 	@GetMapping("/person/{id}")
 	public ResponseEntity<PersonResponseDto> getPersonById(@PathVariable int id) {
 		Person person = personService.getPersonById(id);
@@ -38,6 +49,10 @@ public class PersonController {
 		return new ResponseEntity<PersonResponseDto>(responseBody, HttpStatus.OK);
 	}
 	
+	/**
+	 * @param personDto The person to create.
+	 * @return The created person.
+	 */
 	@PostMapping("/person")
 	public ResponseEntity<PersonResponseDto> createPerson(@Valid @RequestBody PersonRequestDto personDto) {
 		Person person = personDto.toModel();
