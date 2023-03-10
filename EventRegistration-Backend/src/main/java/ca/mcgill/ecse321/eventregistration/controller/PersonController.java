@@ -4,6 +4,8 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,15 +31,17 @@ public class PersonController {
 	}
 	
 	@GetMapping("/person/{id}")
-	public PersonResponseDto getPersonById(@PathVariable int id) {
+	public ResponseEntity<PersonResponseDto> getPersonById(@PathVariable int id) {
 		Person person = personService.getPersonById(id);
-		return new PersonResponseDto(person);
+		PersonResponseDto responseBody = new PersonResponseDto(person);
+		return new ResponseEntity<PersonResponseDto>(responseBody, HttpStatus.OK);
 	}
 	
 	@PostMapping("/person")
-	public PersonResponseDto createPerson(@RequestBody PersonRequestDto personDto) {
+	public ResponseEntity<PersonResponseDto> createPerson(@RequestBody PersonRequestDto personDto) {
 		Person person = personDto.toModel();
 		person = personService.createPerson(person);
-		return new PersonResponseDto(person);
+		PersonResponseDto responseBody = new PersonResponseDto(person);
+		return new ResponseEntity<PersonResponseDto>(responseBody, HttpStatus.CREATED);
 	}
 }
