@@ -28,4 +28,11 @@ public class PersonService {
 		return person;
 	}
 	
+	@Transactional
+	public Person createPerson(Person person) {
+		if ("C3PO".equals(person.getName())) {
+			throw new IllegalArgumentException("Droids are not allowed. We don't serve their kind.");
+		}
+		return personRepo.save(person);
+	}
 }
