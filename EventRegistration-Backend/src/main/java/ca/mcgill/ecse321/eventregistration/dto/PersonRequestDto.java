@@ -4,10 +4,16 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 
 import ca.mcgill.ecse321.eventregistration.model.Person;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class PersonRequestDto {
 
+	@NotBlank(message = "Name cannot be blank.")
 	private String name;
+	@NotNull(message = "Password must not be null.")
+	@Size(min = 10, message = "Password must be at least 10 characters long.")
 	private String password;
 	
 	public void setName(String name) {

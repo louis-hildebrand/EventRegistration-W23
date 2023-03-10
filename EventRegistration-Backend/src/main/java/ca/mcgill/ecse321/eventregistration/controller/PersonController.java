@@ -16,6 +16,7 @@ import ca.mcgill.ecse321.eventregistration.dto.PersonRequestDto;
 import ca.mcgill.ecse321.eventregistration.dto.PersonResponseDto;
 import ca.mcgill.ecse321.eventregistration.model.Person;
 import ca.mcgill.ecse321.eventregistration.service.PersonService;
+import jakarta.validation.Valid;
 
 @RestController
 public class PersonController {
@@ -38,7 +39,7 @@ public class PersonController {
 	}
 	
 	@PostMapping("/person")
-	public ResponseEntity<PersonResponseDto> createPerson(@RequestBody PersonRequestDto personDto) {
+	public ResponseEntity<PersonResponseDto> createPerson(@Valid @RequestBody PersonRequestDto personDto) {
 		Person person = personDto.toModel();
 		person = personService.createPerson(person);
 		PersonResponseDto responseBody = new PersonResponseDto(person);
