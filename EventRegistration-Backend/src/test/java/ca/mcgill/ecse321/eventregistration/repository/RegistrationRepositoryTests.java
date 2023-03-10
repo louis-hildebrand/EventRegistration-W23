@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.eventregistration.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Date;
@@ -39,10 +40,19 @@ public class RegistrationRepositoryTests {
 	public void testPersistAndLoadRegistration() {
 		// Create parent entities and save them before the registration
 		String name = "John";
+		String passwordHash = "abcdef123456";
+		Date creationDate = Date.valueOf("2023-03-10");
 		Person john = new Person();
 		john.setName(name);
+		john.setPasswordHash(passwordHash);
+		john.setCreationDate(creationDate);
 		
 		john = personRepo.save(john);
+		
+		// TODO: remove this
+		assertNotNull(john);
+		assertNotEquals(0, john.getId());
+		System.out.println(john);
 		
 		String eventName = "Midterm";
 		Date date = Date.valueOf("2023-02-23");
