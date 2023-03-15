@@ -25,11 +25,8 @@ public class PersonRequestDto {
 	}
 	
 	public Person toModel() {
-		Person p = new Person();
-		p.setName(name);
 		// TODO: Actually hash the password
-		p.setPasswordHash(password);
-		p.setCreationDate(Date.valueOf(LocalDateTime.now().toLocalDate()));
+		Person p = new Person(name, password, Date.valueOf(LocalDateTime.now().toLocalDate()));
 		
 		return p;
 	}

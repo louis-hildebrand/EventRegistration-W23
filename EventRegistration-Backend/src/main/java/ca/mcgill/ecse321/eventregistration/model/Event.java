@@ -14,15 +14,26 @@ public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	private String name;
-	
+
 	private Date date;
 	
 	private Time startTime;
 	
 	private Time endTime;
 	
+	// Every model class needs a default (no args) constructor. It can be private.
+	@SuppressWarnings("unused")
+	private Event() {}
+
+	public Event(String name, Date date, Time startTime, Time endTime) {
+		this.name = name;
+		this.date = date;
+		this.startTime = startTime;
+		this.endTime = endTime;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -42,21 +53,4 @@ public class Event {
 	public Time getEndTime() {
 		return endTime;
 	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	
-	public void setStartTime(Time startTime) {
-		this.startTime = startTime;
-	}
-	
-	public void setEndTime(Time endTime) {
-		this.endTime = endTime;
-	}
-	
 }

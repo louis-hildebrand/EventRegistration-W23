@@ -31,10 +31,7 @@ public class PersonRepositoryTests {
 		String name = "John";
 		String passwordHash = "abcdef123456";
 		Date creationDate = Date.valueOf("2023-03-10");
-		Person john = new Person();
-		john.setName(name);
-		john.setPasswordHash(passwordHash);
-		john.setCreationDate(creationDate);
+		Person john = new Person(name, passwordHash, creationDate);
 		
 		// Insert into DB
 		john = repo.save(john);

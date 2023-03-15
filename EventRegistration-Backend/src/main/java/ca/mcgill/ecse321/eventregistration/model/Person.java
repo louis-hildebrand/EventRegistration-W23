@@ -17,6 +17,16 @@ public class Person {
 	private String passwordHash;
 	private Date creationDate;
 	
+	// Every model class needs a default (no args) constructor. It can be private.
+	@SuppressWarnings("unused")
+	private Person() {}
+
+	public Person(String name, String passwordHash, Date creationDate) {
+		this.name = name;
+		this.passwordHash = passwordHash;
+		this.creationDate = creationDate;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -31,17 +41,5 @@ public class Person {
 	
 	public Date getCreationDate() {
 		return creationDate;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public void setPasswordHash(String passwordHash) {
-		this.passwordHash = passwordHash;
-	}
-	
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
 	}
 }

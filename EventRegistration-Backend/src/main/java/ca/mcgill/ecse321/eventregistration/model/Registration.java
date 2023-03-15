@@ -13,12 +13,16 @@ public class Registration {
 	@EmbeddedId
 	private RegistrationId id;
 	
+	// Every model class needs a default (no args) constructor. It can be private.
+	@SuppressWarnings("unused")
+	private Registration() {}
+
+	public Registration(Event event, Person person) {
+		this.id = new RegistrationId(event, person);
+	}
+
 	public RegistrationId getId() {
 		return id;
-	}
-	
-	public void setId(RegistrationId id) {
-		this.id = id;
 	}
 
 	public static class RegistrationId implements Serializable {
@@ -30,6 +34,15 @@ public class Registration {
 
 		@ManyToOne
 		private Person person;
+
+		// Embedded IDs also need a default (no args) constructor. It can be private.
+		@SuppressWarnings("unused")
+		private RegistrationId() {}
+
+		public RegistrationId(Event event, Person person) {
+			this.event = event;
+			this.person = person;
+		}
 
 		public Event getEvent() {
 			return event;
@@ -63,5 +76,4 @@ public class Registration {
 		}
 
 	}
-
 }
