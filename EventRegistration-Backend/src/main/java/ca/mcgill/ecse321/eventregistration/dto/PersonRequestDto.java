@@ -16,6 +16,14 @@ public class PersonRequestDto {
 	@Size(min = 10, message = "Password must be at least 10 characters long.")
 	private String password;
 	
+	public String getName() {
+		return name;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}

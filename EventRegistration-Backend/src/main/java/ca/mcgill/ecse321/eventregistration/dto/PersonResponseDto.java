@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321.eventregistration.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import ca.mcgill.ecse321.eventregistration.model.Person;
 
@@ -8,12 +8,14 @@ public class PersonResponseDto {
 
 	private int id;
 	private String name;
-	private Date creationDate;
+	private LocalDate creationDate;
 	
+	PersonResponseDto() {}
+
 	public PersonResponseDto(Person p) {
 		this.id = p.getId();
 		this.name = p.getName();
-		this.creationDate = p.getCreationDate();
+		this.creationDate = p.getCreationDate().toLocalDate();
 	}
 	
 	public int getId() {
@@ -24,7 +26,7 @@ public class PersonResponseDto {
 		return name;
 	}
 	
-	public Date getCreationDate() {
+	public LocalDate getCreationDate() {
 		return creationDate;
 	}
 }
