@@ -60,3 +60,19 @@ jacocoTestCoverageVerification {
 		}
 	}
 }
+
+task integrationTest(type: Exec) {
+	// To run this task, you must have Git Bash installed. You must also start the
+	// backend (./gradlew bootRun) in a separate shell beforehand.
+	//
+	// I don't know how to set this up so that you can reliably run the task on any
+	// platform, regardless of where Git Bash is installed. Running the shell script
+	// with bash src/test/integration/person-integration-tests.sh works if I do it in
+	// a separate terminal. But for some reason, when I try to run this Gradle task, it
+	// tries to run C:\Windows\System32\bash.exe instead, which is not Git Bash. I've
+	// given up and hardcoded the path to my Git Bash installation.
+	//
+	// Good luck.
+	
+	commandLine 'C:/Program Files/Git/bin/bash.exe', 'src/test/integration/person-integration-tests.sh'
+}
