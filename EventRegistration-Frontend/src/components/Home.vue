@@ -24,6 +24,15 @@
 </template>
 
 <script>
+import axios from 'axios';
+const config = require('../../config');
+const frontendUrl = config.dev.host + ':' + config.dev.port;
+const axiosClient = axios.create({
+  // Note the baseURL, not baseUrl
+  baseURL: config.dev.backendBaseUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+});
+
 export default {
   name: 'Home',
   data() {
@@ -37,6 +46,17 @@ export default {
       errorMsg: '',
     };
   },
+  created() {
+    axiosClient.get('/person')
+      .then((response) => {
+        console.log(response);
+        this.persons = response.data;
+      })
+      .catch((err) => {
+        console.log(err);
+        this.errorMsg = err;
+      })
+  },
   methods: {
     createUser() {
       if (this.newPersonName === 'C3PO') {
@@ -44,17 +64,18 @@ export default {
         return;
       }
       
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, 0);
-      const day = String(now.getDate()).padStart(2, 0);
-      const dateStr = `${year}/${month}/${day}`;
-      const person = {name: this.newPersonName, creationDate: dateStr}
-      this.persons.push(person);
-      
-      this.newPersonName = '';
-      this.newPersonPassword = '';
-      this.errorMsg = '';
+      const request = {name: this.newPersonName, password: this.newPersonPassword};
+      axiosClient.post('/person', request)
+        .then((response) => {
+          const person = response.data;
+          this.persons.push(person);
+          this.newPersonName = '';
+          this.newPersonPassword = '';
+          this.errorMsg = '';
+        })
+        .catch((err) => {
+          this.errorMsg = `Failed to create: ${err.response.data}`;
+        })
     }
   },
   computed: {
