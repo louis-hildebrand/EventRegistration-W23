@@ -25,22 +25,18 @@
 
 <script>
 import axios from 'axios';
-const config = require('../../config');
-const frontendUrl = config.dev.host + ':' + config.dev.port;
+import config from '../../config';
+
 const axiosClient = axios.create({
   // Note the baseURL, not baseUrl
-  baseURL: config.dev.backendBaseUrl,
-  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+  baseURL: config.dev.backendBaseUrl
 });
 
 export default {
   name: 'Home',
   data() {
     return {
-      persons: [
-        {name: 'John', creationDate: '2023/03/31'},
-        {name: 'Alice', creationDate: '2022/12/31'},
-      ],
+      persons: [],
       newPersonName: '',
       newPersonPassword: '',
       errorMsg: '',
@@ -49,11 +45,9 @@ export default {
   created() {
     axiosClient.get('/person')
       .then((response) => {
-        console.log(response);
         this.persons = response.data;
       })
       .catch((err) => {
-        console.log(err);
         this.errorMsg = err;
       })
   },
