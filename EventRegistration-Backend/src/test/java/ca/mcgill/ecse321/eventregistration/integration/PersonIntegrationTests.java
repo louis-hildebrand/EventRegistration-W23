@@ -3,9 +3,11 @@ package ca.mcgill.ecse321.eventregistration.integration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,6 +24,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import ca.mcgill.ecse321.eventregistration.dto.ErrorDto;
 import ca.mcgill.ecse321.eventregistration.dto.PersonRequestDto;
 import ca.mcgill.ecse321.eventregistration.dto.PersonResponseDto;
 import ca.mcgill.ecse321.eventregistration.repository.PersonRepository;
@@ -114,24 +117,30 @@ public class PersonIntegrationTests {
 	public void testCreateInvalidPerson() {
 		PersonRequestDto request = new PersonRequestDto();
 
-		ResponseEntity<String> response = client.postForEntity("/person", request, String.class);
+		ResponseEntity<ErrorDto> response = client.postForEntity("/person", request, ErrorDto.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-		assertContains("Name cannot be blank.", response.getBody());
-		assertContains("Password must not be null.", response.getBody());
+		assertEquals(2, response.getBody().getMessages().size());
+		assertContains("Name cannot be blank.", response.getBody().getMessages());
+		assertContains("Password must not be null.", response.getBody().getMessages());
 	}
 
 	@Test
 	@Order(3)
 	public void testGetInvalidPerson() {
-		ResponseEntity<String> response = client.getForEntity("/person/" + TestFixture.INVALID_ID, String.class);
+		ResponseEntity<ErrorDto> response = client.getForEntity("/person/" + TestFixture.INVALID_ID, ErrorDto.class);
 
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-		assertEquals("Not found.", response.getBody());
+		assertEquals(1, response.getBody().getMessages().size());
+		assertEquals("Not found.", response.getBody().getMessages().get(0));
 	}
 
-	private static void assertContains(String expected, String actual) {
-		String assertionMessage = String.format("Error message ('%s') contains '%s'.", actual, expected);
-		assertTrue(actual.contains(expected), assertionMessage);
+	private static void assertContains(String expected, List<String> actual) {
+		for (String s : actual) {
+			if (expected.equals(s)) {
+				return;
+			}
+		}
+		fail(String.format("Error message '%s' not found in list."));
 	}
 }
