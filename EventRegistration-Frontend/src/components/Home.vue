@@ -48,7 +48,8 @@ export default {
         this.persons = response.data;
       })
       .catch((err) => {
-        this.errorMsg = err;
+        const messages = err.response.data.messages;
+        this.errorMsg = messages.join("\n");
       })
   },
   methods: {
@@ -68,7 +69,9 @@ export default {
           this.errorMsg = '';
         })
         .catch((err) => {
-          this.errorMsg = `Failed to create: ${err.response.data}`;
+          const messages = err.response.data.messages;
+          const joinedMessage = messages.join(" ");
+          this.errorMsg = `Failed to create: ${joinedMessage}`;
         })
     }
   },
